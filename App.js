@@ -1,20 +1,31 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+
+import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
+import { useEffect } from "react";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>This is react native app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [fontsLoaded] = useFonts({
+    "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
+  });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    prepare();
+  }, []);
+
+  if (!fontsLoaded) {
+    return undefined;
+  } else {
+    SplashScreen.hideAsync();
+  }
+  return <RegistrationScreen />;
+}
