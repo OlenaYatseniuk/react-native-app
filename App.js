@@ -1,9 +1,9 @@
-import { StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
+import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 
 import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
-import { useEffect } from "react";
+import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,5 +27,6 @@ export default function App() {
   } else {
     SplashScreen.hideAsync();
   }
-  return <RegistrationScreen />;
+  // return <RegistrationScreen />;
+  return <LoginScreen />;
 }

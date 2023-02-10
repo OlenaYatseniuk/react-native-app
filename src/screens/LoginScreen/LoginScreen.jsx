@@ -13,12 +13,11 @@ import {
 import Input from "../../components/Input/Input";
 
 const initialState = {
-  login: "",
   email: "",
   password: "",
 };
 
-export default function RegistrationScreen() {
+export default function LoginScreen() {
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
@@ -26,7 +25,7 @@ export default function RegistrationScreen() {
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-    const handleFocus = () => {
+  const handleFocus = () => {
     setIsShowKeyboard(true);
   };
 
@@ -53,25 +52,11 @@ export default function RegistrationScreen() {
             <View
               style={{
                 ...styles.form,
-                paddingBottom: isShowKeyboard ? 20 : 45,
+                paddingBottom: isShowKeyboard ? 20 : 111,
               }}
             >
               <View>
-                {/* <View style={styles.avatarWrapper}>
-                  <ImageBackground
-                    source={require("../../../assets/images/default-avatar.jpg")}
-                    style={styles.avatar}
-                  />
-                </View> */}
-                <Text style={styles.headerTitle}>Registration</Text>
-              </View>
-              <View style={{ marginBottom: 16 }}>
-                <Input
-                  value={state.login}
-                  placeholder={"Login"}
-                  onChangeText={(value) => handleInputChange(value, "login")}
-                  onFocus={handleFocus}
-                />
+                <Text style={styles.headerTitle}>Log in</Text>
               </View>
               <View style={{ marginBottom: 16 }}>
                 <Input
@@ -100,14 +85,14 @@ export default function RegistrationScreen() {
                       handleSubmit();
                     }}
                   >
-                    <Text style={styles.btnTitle}>SIGN IN</Text>
+                    <Text style={styles.btnTitle}>LOG IN</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     activeOpacity={0.7}
                     style={styles.redirectBtn}
                   >
                     <Text style={styles.redirectText}>
-                      Already have an account? Log in
+                      Haven't an account yet? Register
                     </Text>
                   </TouchableOpacity>
                 </>
@@ -135,31 +120,15 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     fontFamily: "Roboto-Regular",
-    paddingTop: 92,
+    paddingTop: 32,
     paddingLeft: 16,
     paddingRight: 16,
   },
-  //   avatarWrapper: {
-  //     width: 120,
-  //     height: 120,
-  //     borderRadius: 16,
-  //     backgroundColor: "#F6F6F6",
-  //     position: "absolute",
-  //     transform: [{ translateY: -140 }],
-  //     alignSelf: "center",
-  //     overflow: "hidden",
-  //   },
-  //   avatar: {
-  //     flex: 1,
-  //     resizeMode: "cover",
-  //     borderRadius: 16,
-  //   },
   headerTitle: {
     fontFamily: "Roboto-Medium",
     fontSize: 30,
     lineHeight: 35,
     textAlign: "center",
-    marginTop: 32,
     marginBottom: 32,
   },
   input: {
