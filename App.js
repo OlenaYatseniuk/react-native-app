@@ -27,6 +27,6 @@ export default function App() {
   } else {
     SplashScreen.hideAsync();
   }
-  // return <RegistrationScreen />;
-  return <LoginScreen />;
+  return <RegistrationScreen />;
+  // return <LoginScreen />;
 }
