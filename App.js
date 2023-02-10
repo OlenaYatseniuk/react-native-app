@@ -12,14 +12,14 @@ export default function App() {
   });
 
   useEffect(() => {
-    async function prepare() {
+    async function loadFonts() {
       try {
         await SplashScreen.preventAutoHideAsync();
       } catch (error) {
         console.log(error.message);
       }
     }
-    prepare();
+    loadFonts();
   }, []);
 
   if (!fontsLoaded) {
