@@ -30,7 +30,7 @@ export default PostsScreen = () => {
       initialRouteName="DefaultScreen"
     >
       <InnerScreens.Screen
-        name="DefaultScreens"
+        name="DefaultScreen"
         component={DefaultScreenPosts}
         options={{
           headerTitle: "Posts",

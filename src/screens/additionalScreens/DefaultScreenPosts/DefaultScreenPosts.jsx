@@ -1,11 +1,21 @@
 import { useEffect, useState } from "react";
-import { View, Image, StyleSheet } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import {
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+} from "react-native";
+
+import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 
 export default DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
+  console.log("route.params", route.params);
 
   useEffect(() => {
+    console.log("route.params", route.params);
     if (route.params) {
       setPosts((prevState) => [...prevState, route.params]);
     }
@@ -15,7 +25,7 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
     <View style={styles.container}>
       <FlatList
         data={posts}
-        keyExtractor={(item, indx) => indx.toString()}
+        keyExtractor={(_, indx) => indx.toString()}
         renderItem={({ item }) => (
           <View style={styles.postWrapper}>
             <Image
@@ -27,7 +37,7 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
               <View style={styles.infoWrapper}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("Comments")}
+                  onPress={() => navigation.navigate("CommentsScreen")}
                   style={styles.commentsWrapper}
                 >
                   <Feather name="message-circle" size={24} color="#BDBDBD" />
@@ -35,7 +45,9 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("Map", item.photoData)}
+                  onPress={() =>
+                    navigation.navigate("MapScreen", item.photoData)
+                  }
                   style={styles.locationWrapper}
                 >
                   <SimpleLineIcons
