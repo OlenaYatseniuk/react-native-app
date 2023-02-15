@@ -1,15 +1,19 @@
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { NavigationContainer } from "@react-navigation/native";
 
-import RegistrationScreen from "./src/screens/RegistrationScreen/RegistrationScreen";
-import LoginScreen from "./src/screens/LoginScreen/LoginScreen";
+import useRouter from "./src/router";
 
 export default function App() {
+  const [isLogined, setIsLogined] = useState(true);
+
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
   });
+
+  const router = useRouter(isLogined);
 
   useEffect(() => {
     async function loadFonts() {
@@ -27,6 +31,5 @@ export default function App() {
   } else {
     SplashScreen.hideAsync();
   }
-  return <RegistrationScreen />;
-  // return <LoginScreen />;
+  return <NavigationContainer>{router}</NavigationContainer>;
 }
