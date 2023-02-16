@@ -29,7 +29,7 @@ export default CreatePostsScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photoInfo, setPhotoInfo] = useState(initialState);
-  const [coordinates, setCoordinates] = useState(null);
+  const [coordinates, setCoordinates] = useState({latitude: 48.864716, longitude: 2.349014});
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const photoData = {
@@ -82,8 +82,8 @@ export default CreatePostsScreen = ({ navigation }) => {
     }
     let location = await Location.getCurrentPositionAsync();
     const coords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
+      latitude: location?.coords?.latitude,
+      longitude: location?.coords?.longitude,
     };
     setCoordinates(coords);
   };

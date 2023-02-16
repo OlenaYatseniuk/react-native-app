@@ -57,6 +57,7 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
                     {item.photoData.photoInfo.location}
                   </Text>
                 </TouchableOpacity>
+                
               </View>
             </View>
           </View>
