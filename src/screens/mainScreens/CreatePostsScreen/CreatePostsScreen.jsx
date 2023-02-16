@@ -10,8 +10,13 @@ import {
   Keyboard,
 } from "react-native";
 import { Camera } from "expo-camera";
-
-import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
+import {
+  FontAwesome,
+  SimpleLineIcons,
+  Ionicons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 const initialState = {
   title: "",
@@ -24,18 +29,18 @@ export default CreatePostsScreen = ({ navigation }) => {
   const [photo, setPhoto] = useState("");
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [photoInfo, setPhotoInfo] = useState(initialState);
+  const [coordinates, setCoordinates] = useState(null);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const photoData = {
     photo,
     photoInfo,
+    coordinates,
   };
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
-      // await MediaLibrary.requestPermissionsAsync();
-
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -52,9 +57,8 @@ export default CreatePostsScreen = ({ navigation }) => {
   const takePhoto = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      // await MediaLibrary.createAssetAsync(uri);
+      await getCurrentLocation();
       setPhoto(uri);
-      console.log("uri", uri);
     }
   };
 
@@ -62,11 +66,37 @@ export default CreatePostsScreen = ({ navigation }) => {
     setPhoto("");
   };
 
-  const postPhotoInfo = () => {
+  const changeCameraType = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
+
+  const getCurrentLocation = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission to access location was denied");
+      return;
+    }
+    let location = await Location.getCurrentPositionAsync();
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setCoordinates(coords);
+  };
+
+  const postPhotoData = () => {
     navigation.navigate("DefaultScreen", { photoData });
     setPhoto("");
     setPhotoInfo(initialState);
+    setCoordinates(null);
+    console.log(photo, coordinates, photoInfo);
   };
+
+  const isPhotoInfoReady = !!photo && !!photoInfo.location && !!photoInfo.title;
 
   if (hasPermission === null) {
     return <View />;
@@ -104,6 +134,16 @@ export default CreatePostsScreen = ({ navigation }) => {
                   <FontAwesome name="camera" size={24} color="white" />
                 </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                style={styles.flipCam}
+                onPress={changeCameraType}
+              >
+                <MaterialIcons
+                  name="flip-camera-android"
+                  size={24}
+                  color="white"
+                />
+              </TouchableOpacity>
             </Camera>
           )}
         </View>
@@ -135,18 +175,18 @@ export default CreatePostsScreen = ({ navigation }) => {
           />
         </View>
         <TouchableOpacity
-          disabled={!photoInfo.title}
+          disabled={!isPhotoInfoReady}
           activeOpacity={0.8}
-          onPress={postPhotoInfo}
+          onPress={postPhotoData}
           style={{
             ...styles.publishBtn,
-            backgroundColor: photoInfo.title ? "#FF6C00" : "#F6F6F6",
+            backgroundColor: isPhotoInfoReady ? "#FF6C00" : "#F6F6F6",
           }}
         >
           <Text
             style={{
               ...styles.publishBtnText,
-              color: photoInfo.title ? "#FFFFFF" : "#BDBDBD",
+              color: isPhotoInfoReady ? "#FFFFFF" : "#BDBDBD",
             }}
           >
             Publish
@@ -169,7 +209,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#F6F6F6",
-    height: 240,
+    height: 250,
   },
   imageWrapper: {},
   image: {
@@ -195,6 +235,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#F6F6F6",
   },
+  flipCam: {
+    position: "absolute",
+    right: 5,
+    padding: 10,
+    textAlign: "center",
+  },
   photoView: {
     flex: 1,
     backgroundColor: "transparent",
@@ -207,6 +253,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+    // alignSelf:'center,'
   },
   photoTitleContainer: {
     marginTop: 8,

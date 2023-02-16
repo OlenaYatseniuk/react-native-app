@@ -12,10 +12,8 @@ import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 
 export default DefaultScreenPosts = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
-  console.log("route.params", route.params);
 
   useEffect(() => {
-    console.log("route.params", route.params);
     if (route.params) {
       setPosts((prevState) => [...prevState, route.params]);
     }
@@ -41,7 +39,7 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
                   style={styles.commentsWrapper}
                 >
                   <Feather name="message-circle" size={24} color="#BDBDBD" />
-                  <Text style={styles.commentsCount}>15</Text>
+                  <Text style={styles.commentsCount}>11</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}

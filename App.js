@@ -27,7 +27,7 @@ export default function App() {
   }, []);
 
   if (!fontsLoaded) {
-    return undefined;
+    return null;
   } else {
     SplashScreen.hideAsync();
   }
