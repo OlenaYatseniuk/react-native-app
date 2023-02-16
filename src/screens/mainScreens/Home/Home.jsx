@@ -32,6 +32,7 @@ export default Home = () => {
           lineHeight: 22,
           letterSpacing: 0.8,
         },
+        tabBarHideOnKeyboard: true
       }}
     >
       <MainTab.Screen

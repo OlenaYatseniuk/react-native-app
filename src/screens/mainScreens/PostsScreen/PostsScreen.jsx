@@ -10,6 +10,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 const InnerScreens = createStackNavigator();
 
 export default PostsScreen = () => {
+
   return (
     <InnerScreens.Navigator
       screenOptions={{
@@ -70,4 +71,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 16,
   },
+  redirectBtn:{paddingHorizontal: 16,
+    paddingVertical: 10,}
 });
