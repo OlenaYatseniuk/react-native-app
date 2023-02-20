@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { NavigationContainer } from "@react-navigation/native";
 
-import useRouter from "./src/router";
+import Main from "./src/components/Main/Main";
 
 export default function App() {
-  const [isLogined, setIsLogined] = useState(true);
-
   const [fontsLoaded] = useFonts({
     "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Medium": require("./assets/fonts/Roboto-Medium.ttf"),
   });
-
-  const router = useRouter(isLogined);
 
   useEffect(() => {
     async function loadFonts() {
@@ -31,5 +28,9 @@ export default function App() {
   } else {
     SplashScreen.hideAsync();
   }
-  return <NavigationContainer>{router}</NavigationContainer>;
+  return (
+    <Provider store={store}>
+      <Main />
+    </Provider>
+  );
 }

@@ -10,6 +10,8 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../redux/auth/authOperations";
 import Input from "../../../components/Input/Input";
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
 export default function LoginScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const dispatch = useDispatch();
 
   const handleInputChange = (value, name) => {
     setState((prevState) => ({ ...prevState, [name]: value }));
@@ -30,9 +33,9 @@ export default function LoginScreen({ navigation }) {
   };
 
   const handleSubmit = () => {
-    console.log(state);
+    dispatch(loginUser(state));
     setState(initialState);
-    navigation.navigate('Home');
+    navigation.navigate("Home");
   };
 
   const keyboardHide = () => {

@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import Input from "../../../components/Input/Input";
 import { AntDesign } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { registerNewUser } from "../../../redux/auth/authOperations";
 
 const initialState = {
   login: "",
@@ -22,6 +24,7 @@ const initialState = {
 export default function RegistrationScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const dispatch = useDispatch();
 
   const handleInputChange = (value, name) => {
     setState((prevState) => ({ ...prevState, [name]: value }));
@@ -32,9 +35,9 @@ export default function RegistrationScreen({ navigation }) {
   };
 
   const handleSubmit = () => {
-    console.log(state);
+    dispatch(registerNewUser(state));
     setState(initialState);
-    navigation.navigate("Home");
+    navigation.navigate("Home", { screen: "Posts" });
   };
 
   const keyboardHide = () => {

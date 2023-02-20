@@ -20,6 +20,11 @@ export default useRouter = (isLogined) => {
           name="Login"
           component={LoginScreen}
         />
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Home"
+          component={Home}
+        />
       </AuthStack.Navigator>
     );
   }

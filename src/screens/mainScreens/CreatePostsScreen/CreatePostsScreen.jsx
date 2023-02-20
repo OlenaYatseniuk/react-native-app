@@ -14,7 +14,6 @@ import * as Location from "expo-location";
 import {
   FontAwesome,
   SimpleLineIcons,
-  Ionicons,
   MaterialIcons,
 } from "@expo/vector-icons";
 
@@ -75,12 +74,12 @@ export default CreatePostsScreen = ({ navigation }) => {
   };
 
   const getCurrentLocation = async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
+    const { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== "granted") {
       console.log("Permission to access location was denied");
       return;
     }
-    let location = await Location.getCurrentPositionAsync();
+    const location = await Location.getCurrentPositionAsync();
     const coords = {
       latitude: location?.coords?.latitude,
       longitude: location?.coords?.longitude,
