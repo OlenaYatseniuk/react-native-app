@@ -8,16 +8,28 @@ import {
   StyleSheet,
 } from "react-native";
 
+import { db } from "../../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
+
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 
-export default DefaultScreenPosts = ({ route, navigation }) => {
+export default DefaultScreenPosts = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
+  const getAllPosts = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, "posts"));
+      if (snapshot) {
+        setPosts(snapshot.docs.map((doc) => ({ ...doc.data, id: doc.id })));
+      }
+    } catch (error) {
+      console.log("Error loading all posts", error.message);
     }
-  }, [route.params]);
+  };
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -26,16 +38,18 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
         keyExtractor={(_, indx) => indx.toString()}
         renderItem={({ item }) => (
           <View style={styles.postWrapper}>
-            <Image
-              style={styles.image}
-              source={{ uri: item.photoData.photo }}
-            />
+            <Image style={styles.image} source={{ uri: item.photo }} />
             <View style={styles.infoBox}>
-              <Text style={styles.title}>{item.photoData.photoInfo.title}</Text>
+              <Text style={styles.title}>{item.title}</Text>
               <View style={styles.infoWrapper}>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() => navigation.navigate("CommentsScreen")}
+                  onPress={() =>
+                    navigation.navigate("CommentsScreen", {
+                      postId: item.id,
+                      photo: item.photo,
+                    })
+                  }
                   style={styles.commentsWrapper}
                 >
                   <Feather name="message-circle" size={24} color="#BDBDBD" />
@@ -43,9 +57,7 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}
-                  onPress={() =>
-                    navigation.navigate("MapScreen", item.photoData)
-                  }
+                  onPress={() => navigation.navigate("MapScreen", item)}
                   style={styles.locationWrapper}
                 >
                   <SimpleLineIcons
@@ -53,11 +65,8 @@ export default DefaultScreenPosts = ({ route, navigation }) => {
                     size={24}
                     color="#BDBDBD"
                   />
-                  <Text style={styles.location}>
-                    {item.photoData.photoInfo.location}
-                  </Text>
+                  <Text style={styles.location}>{item.location}</Text>
                 </TouchableOpacity>
-                
               </View>
             </View>
           </View>

@@ -6,10 +6,18 @@ import CommentsScreen from "../../additionalScreens/CommentsScreen/CommentsScree
 import MapScreen from "../../additionalScreens/MapScreen/MapScreen";
 
 import { MaterialIcons } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { logOutUser } from "../../../redux/auth/authOperations";
 
 const InnerScreens = createStackNavigator();
 
 export default PostsScreen = () => {
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    console.log('logout')
+    dispatch(logOutUser());
+  }
 
   return (
     <InnerScreens.Navigator
@@ -38,7 +46,7 @@ export default PostsScreen = () => {
           headerRight: () => (
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => console.log("Logout Click")}
+              onPress={() => logOut()}
               style={styles.logout}
             >
               <MaterialIcons name="logout" size={24} color="#BDBDBD" />

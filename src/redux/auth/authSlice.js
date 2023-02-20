@@ -4,7 +4,7 @@ const initialState = {
   userId: null,
   login: null,
   email: null,
-  stateChange: null,
+  stateChange: false,
 };
 
 export const authSlice = createSlice({
@@ -21,5 +21,6 @@ export const authSlice = createSlice({
       ...state,
       stateChange: payload.stateChange,
     }),
+    authLogOut: () => initialState,
   },
 });

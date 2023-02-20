@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 
 import { authSlice } from "./authSlice";
-const { updateUserProfile, authStateChange } = authSlice.actions;
+const { updateUserProfile, authStateChange, authLogOut } = authSlice.actions;
 
 export const registerNewUser =
   ({ login, email, password }) =>
@@ -65,4 +65,9 @@ export const authStateChangeUser = () => async (dispatch, getState) => {
       );
     }
   });
+};
+
+export const logOutUser = () => async (dispatch, getState) => {
+  await signOut(auth);
+  dispatch(authLogOut());
 };
