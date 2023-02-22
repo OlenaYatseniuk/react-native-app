@@ -35,7 +35,6 @@ export default function LoginScreen({ navigation }) {
   const handleSubmit = () => {
     dispatch(loginUser(state));
     setState(initialState);
-    navigation.navigate("Home");
   };
 
   const keyboardHide = () => {

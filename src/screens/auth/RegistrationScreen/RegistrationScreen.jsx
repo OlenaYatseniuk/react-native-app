@@ -37,7 +37,6 @@ export default function RegistrationScreen({ navigation }) {
   const handleSubmit = () => {
     dispatch(registerNewUser(state));
     setState(initialState);
-    navigation.navigate("Home", { screen: "Posts" });
   };
 
   const keyboardHide = () => {
@@ -63,10 +62,10 @@ export default function RegistrationScreen({ navigation }) {
             >
               <View>
                 <View style={styles.avatarWrapper}>
-                  {/* <ImageBackground
+                  <ImageBackground
                     source={require("../../../../assets/images/default-avatar.jpg")}
                     style={styles.avatar}
-                  /> */}
+                  />
                 </View>
                 <TouchableOpacity
                   style={styles.btnAddWrapper}

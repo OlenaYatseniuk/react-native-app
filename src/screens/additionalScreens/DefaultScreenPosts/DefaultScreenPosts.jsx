@@ -19,7 +19,6 @@ export default DefaultScreenPosts = ({ navigation }) => {
   const getAllPosts = async () => {
     try {
       const snapshot = await getDocs(collection(db, "posts"));
-      console.log("snapshot", snapshot);
       if (snapshot) {
         setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       }
