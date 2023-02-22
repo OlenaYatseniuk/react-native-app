@@ -42,6 +42,7 @@ export default ProfileScreen = ({ navigation }) => {
   useEffect(() => {
     getAllUserPosts();
   }, []);
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -65,6 +66,22 @@ export default ProfileScreen = ({ navigation }) => {
           <View style={styles.loginWrapper}>
             <Text style={styles.login}>{login}</Text>
           </View>
+          {!userPosts.length && (
+            <View>
+              <Text style={styles.noPostsText}>
+                You haven't no posts yet. 
+              </Text>
+              <TouchableOpacity
+                      activeOpacity={0.7}
+                      style={styles.redirectBtn}
+                      onPress={() => navigation.navigate("Create posts")}
+                    >
+                      <Text style={styles.redirectText}>
+                        To change this you can tap here
+                      </Text>
+                    </TouchableOpacity>
+            </View>
+          )}
           <FlatList
             data={userPosts}
             keyExtractor={(_, index) => index.toString()}
@@ -206,6 +223,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
   },
-  locationIcon: {},
   location: { textDecorationLine: "underline", marginLeft: 5 },
+  redirectText: {
+    fontFamily: "Roboto-Regular",
+    fontSize: 16,
+    textAlign: "center",
+    color: "#1B4371",
+  },
+  noPostsText: {
+    textAlign: 'center',
+    fontSize: 16,
+  }
 });

@@ -13,9 +13,16 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-import { doc, setDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  collection,
+  getDocs,
+  onSnapshot,
+  query,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
-import {setCommentDate} from '../../../helpers/setCommentDate'
+import { setCommentDate } from "../../../helpers/setCommentDate";
 
 export default function CommentsScreen({ route }) {
   const { postId, photo } = route.params;
@@ -47,15 +54,12 @@ export default function CommentsScreen({ route }) {
 
   const getAllComments = async () => {
     try {
-      const querySnapshot = await getDocs(
-        collection(db, "posts", postId, "comments")
-      );
-
-      if (querySnapshot) {
+      const q = query(collection(db, "posts", postId, "comments"));
+       onSnapshot(q, (querySnapshot) =>
         setAllComments(
           querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        );
-      }
+        )
+      );
     } catch (error) {
       console.error("Get comments error: ", error.message);
     }

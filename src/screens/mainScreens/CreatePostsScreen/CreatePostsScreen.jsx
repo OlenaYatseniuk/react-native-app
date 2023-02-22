@@ -111,13 +111,12 @@ export default CreatePostsScreen = ({ navigation }) => {
       return photoUrl;
     } catch (error) {
       console.log("Upload photo error: ", error.message);
-      console.log("Error here: ", error);
     }
   };
 
   const uploadPostToServer = async () => {
     const photo = await uploadPhotoToServer();
-    console.log("photo in uploadpostServer", photo);
+
     try {
       const docRef = await addDoc(collection(db, "posts"), {
         photo,
@@ -128,7 +127,6 @@ export default CreatePostsScreen = ({ navigation }) => {
         login,
         email,
       });
-      console.log("docRef", docRef);
     } catch (error) {
       console.log("Upload post error: ", error.message);
     }

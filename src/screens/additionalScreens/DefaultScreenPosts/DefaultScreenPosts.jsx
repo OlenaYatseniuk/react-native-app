@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { db } from "../../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 
@@ -18,14 +18,29 @@ export default DefaultScreenPosts = ({ navigation }) => {
 
   const getAllPosts = async () => {
     try {
-      const snapshot = await getDocs(collection(db, "posts"));
-      if (snapshot) {
-        setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      }
+      const q = query(collection(db, 'posts'))
+      onSnapshot(q, (querySnapshot) => setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
+
     } catch (error) {
       console.log("Error loading all posts", error.message);
     }
   };
+
+  const getCommentsCount = async (postId) => {
+    
+    try {
+      const snapshot = await getDocs(
+        collection(db, "posts", postId, "comments"))
+      
+      if (snapshot) {
+        const count = snapshot.docs.length;
+        console.log('count,', count);
+      }
+      return 
+    } catch (error) {
+      console.log("Error loading comments count", error.message);
+    }
+  }
 
   useEffect(() => {
     getAllPosts();
@@ -53,7 +68,7 @@ export default DefaultScreenPosts = ({ navigation }) => {
                   style={styles.commentsWrapper}
                 >
                   <Feather name="message-circle" size={24} color="#BDBDBD" />
-                  <Text style={styles.commentsCount}>11</Text>
+                  <Text style={styles.commentsCount}>10</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}

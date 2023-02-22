@@ -17,7 +17,7 @@ export const registerNewUser =
     try {
       await createUserWithEmailAndPassword(
         auth,
-        email.toLowerCase(),
+        email.toLowerCase().trim(),
         password.trim()
       );
       await updateProfile(auth.currentUser, {
@@ -44,7 +44,7 @@ export const loginUser =
     try {
       await signInWithEmailAndPassword(
         auth,
-        email.toLowerCase(),
+        email.toLowerCase().trim(),
         password.trim()
       );
     } catch (error) {
