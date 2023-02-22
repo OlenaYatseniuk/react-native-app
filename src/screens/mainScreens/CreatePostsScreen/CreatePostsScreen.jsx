@@ -42,12 +42,6 @@ export default CreatePostsScreen = ({ navigation }) => {
 
   const { userId, login, email } = useSelector((state) => state.auth);
 
-  // const photoData = {
-  //   photo,
-  //   photoInfo,
-  //   coordinates,
-  // };
-
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -102,23 +96,18 @@ export default CreatePostsScreen = ({ navigation }) => {
   const uploadPhotoToServer = async () => {
     try {
       const response = await fetch(photo);
-      console.log("response", response);
       const file = await response.blob();
-      console.log("file", file);
 
       const photoId = Date.now().toString();
 
       const storage = getStorage();
       const storageRef = ref(storage, `photos/${photoId}`);
-      console.log("storageRef before upload", storageRef);
 
       await uploadBytes(storageRef, file);
 
       const photoPath = ref(storage, `photos/${photoId}`);
-      console.log("photoPath", photoPath);
 
       const photoUrl = await getDownloadURL(photoPath);
-      console.log("photoUrl", photoUrl);
       return photoUrl;
     } catch (error) {
       console.log("Upload photo error: ", error.message);
@@ -145,13 +134,12 @@ export default CreatePostsScreen = ({ navigation }) => {
     }
   };
 
-  const postPhotoData = () => {
+  const postPhotoData = async () => {
+    await uploadPostToServer();
     navigation.navigate("DefaultScreen");
-    uploadPostToServer();
     setPhoto("");
     setPhotoInfo(initialState);
     setCoordinates(null);
-    console.log(photo, coordinates, photoInfo);
   };
 
   const isPhotoInfoReady = !!photo && !!photoInfo.location && !!photoInfo.title;

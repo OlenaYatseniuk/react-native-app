@@ -4,9 +4,10 @@ import MapView, { Marker } from "react-native-maps";
 export default MapScreen = ({ route }) => {
   const { latitude, longitude } = route.params.coordinates;
   const { title, location } = route.params;
-  
+  console.log(route.params);
+
   return (
-  <MapView
+    <MapView
       style={styles.map}
       initialRegion={{
         latitude,
@@ -30,5 +31,5 @@ export default MapScreen = ({ route }) => {
 const styles = StyleSheet.create({
   map: {
     flex: 1,
-  }
+  },
 });
