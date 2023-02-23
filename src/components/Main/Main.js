@@ -8,6 +8,7 @@ import { authStateChangeUser } from "../../redux/auth/authOperations";
 export default function Main() {
   const stateChange = useSelector((state) => state.auth.stateChange);
   const dispatch = useDispatch();
+  console.log("stateChange", stateChange);
 
   useEffect(() => {
     dispatch(authStateChangeUser());

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 
 import { db } from "../../../firebase/config";
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, query } from "firebase/firestore";
 
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 
@@ -18,9 +18,13 @@ export default DefaultScreenPosts = ({ navigation }) => {
 
   const getAllPosts = async () => {
     try {
-      const q = query(collection(db, 'posts'))
-      onSnapshot(q, (querySnapshot) => setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
-      // console.log('posts', posts)
+      const q = query(collection(db, "posts"));
+      onSnapshot(q, (querySnapshot) =>
+        setPosts(
+          querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        )
+      );
+      console.log("posts", posts);
     } catch (error) {
       console.log("Error loading all posts", error.message);
     }
@@ -52,7 +56,9 @@ export default DefaultScreenPosts = ({ navigation }) => {
                   style={styles.commentsWrapper}
                 >
                   <Feather name="message-circle" size={24} color="#BDBDBD" />
-                  <Text style={styles.commentsCount}>10</Text>
+                  <Text style={styles.commentsCount}>
+                    {item.comments.length}
+                  </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   activeOpacity={0.8}

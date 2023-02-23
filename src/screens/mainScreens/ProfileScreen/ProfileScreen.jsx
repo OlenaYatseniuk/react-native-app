@@ -11,7 +11,12 @@ import {
 } from "react-native";
 import { logOutUser } from "../../../redux/auth/authOperations";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 import { db } from "../../../firebase/config";
 
 import { MaterialIcons, SimpleLineIcons, Feather } from "@expo/vector-icons";
@@ -32,8 +37,11 @@ export default ProfileScreen = ({ navigation }) => {
         collection(db, "posts"),
         where("userId", "==", userId)
       );
-      const snapshot = await getDocs(filter);
-      setUserPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      onSnapshot(filter, (querySnapshot) =>
+        setUserPosts(
+          querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        )
+      );
     } catch (error) {
       console.log("Error in loading all user posts", error.message);
     }
@@ -68,18 +76,16 @@ export default ProfileScreen = ({ navigation }) => {
           </View>
           {!userPosts.length && (
             <View>
-              <Text style={styles.noPostsText}>
-                You haven't no posts yet. 
-              </Text>
+              <Text style={styles.noPostsText}>You haven't no posts yet.</Text>
               <TouchableOpacity
-                      activeOpacity={0.7}
-                      style={styles.redirectBtn}
-                      onPress={() => navigation.navigate("Create posts")}
-                    >
-                      <Text style={styles.redirectText}>
-                        To change this you can tap here
-                      </Text>
-                    </TouchableOpacity>
+                activeOpacity={0.7}
+                style={styles.redirectBtn}
+                onPress={() => navigation.navigate("Create posts")}
+              >
+                <Text style={styles.redirectText}>
+                  To change this you can tap here
+                </Text>
+              </TouchableOpacity>
             </View>
           )}
           <FlatList
@@ -106,7 +112,9 @@ export default ProfileScreen = ({ navigation }) => {
                         size={24}
                         color="#BDBDBD"
                       />
-                      <Text style={styles.commentsCount}>0</Text>
+                      <Text style={styles.commentsCount}>
+                        {item.comments.length}
+                      </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       activeOpacity={0.8}
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
     color: "#1B4371",
   },
   noPostsText: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 16,
-  }
+  },
 });

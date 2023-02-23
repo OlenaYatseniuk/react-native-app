@@ -126,7 +126,8 @@ export default CreatePostsScreen = ({ navigation }) => {
         userId,
         login,
         email,
-        createdAt: new Date()
+        createdAt: new Date(),
+        comments:[]
       });
     } catch (error) {
       console.log("Upload post error: ", error.message);

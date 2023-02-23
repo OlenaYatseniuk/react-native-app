@@ -13,14 +13,7 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-import {
-  doc,
-  setDoc,
-  collection,
-  getDocs,
-  onSnapshot,
-  query,
-} from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/config";
 import { setCommentDate } from "../../../helpers/setCommentDate";
 
@@ -39,12 +32,18 @@ export default function CommentsScreen({ route }) {
 
   const createComment = async () => {
     try {
-      const uniqId = Date.now().toString();
-      await setDoc(doc(db, "posts", postId, "comments", uniqId), {
-        login,
-        comment,
-        createdAt: setCommentDate(),
+      const id = Date.now().toString();
+      const postRef = doc(db, "posts", postId);
+      console.log("postRef", postRef);
+      await updateDoc(postRef, {
+        comments: arrayUnion({
+          login,
+          comment,
+          createdAt: setCommentDate(),
+          id,
+        }),
       });
+
       keyboardHide();
       setComment("");
     } catch (error) {
@@ -54,11 +53,8 @@ export default function CommentsScreen({ route }) {
 
   const getAllComments = async () => {
     try {
-      const q = query(collection(db, "posts", postId, "comments"));
-       onSnapshot(q, (querySnapshot) =>
-        setAllComments(
-          querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        )
+      onSnapshot(doc(db, "posts", postId), (querySnapshot) =>
+        setAllComments(querySnapshot.data().comments)
       );
     } catch (error) {
       console.error("Get comments error: ", error.message);
