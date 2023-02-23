@@ -55,8 +55,8 @@ export default DefaultScreenPosts = ({ navigation }) => {
                   }
                   style={styles.commentsWrapper}
                 >
-                  <Feather name="message-circle" size={24} color="#BDBDBD" />
-                  <Text style={styles.commentsCount}>
+                  <Feather name="message-circle" size={24} color={item.comments.length > 0 ? '#FF6C00' : "#BDBDBD"}  />
+                  <Text style={{ ...styles.commentsCount, color:  item.comments.length > 0 ? '#FF6C00' : "#BDBDBD"}}>
                     {item.comments.length}
                   </Text>
                 </TouchableOpacity>
