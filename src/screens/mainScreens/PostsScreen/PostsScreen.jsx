@@ -15,7 +15,6 @@ export default PostsScreen = () => {
   const dispatch = useDispatch();
 
   const logOut = () => {
-    console.log('logout')
     dispatch(logOutUser());
   }
 

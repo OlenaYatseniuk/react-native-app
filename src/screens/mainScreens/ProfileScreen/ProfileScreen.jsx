@@ -23,7 +23,7 @@ export default ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const logOut = () => {
-    dispatch(logOutUser);
+    dispatch(logOutUser());
   };
 
   const getAllUserPosts = async () => {

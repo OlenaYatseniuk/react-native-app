@@ -20,27 +20,11 @@ export default DefaultScreenPosts = ({ navigation }) => {
     try {
       const q = query(collection(db, 'posts'))
       onSnapshot(q, (querySnapshot) => setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))))
-
+      // console.log('posts', posts)
     } catch (error) {
       console.log("Error loading all posts", error.message);
     }
   };
-
-  const getCommentsCount = async (postId) => {
-    
-    try {
-      const snapshot = await getDocs(
-        collection(db, "posts", postId, "comments"))
-      
-      if (snapshot) {
-        const count = snapshot.docs.length;
-        console.log('count,', count);
-      }
-      return 
-    } catch (error) {
-      console.log("Error loading comments count", error.message);
-    }
-  }
 
   useEffect(() => {
     getAllPosts();
