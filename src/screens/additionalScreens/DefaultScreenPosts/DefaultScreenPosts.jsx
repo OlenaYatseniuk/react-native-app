@@ -24,7 +24,6 @@ export default DefaultScreenPosts = ({ navigation }) => {
           querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         )
       );
-      console.log("posts", posts);
     } catch (error) {
       console.log("Error loading all posts", error.message);
     }
@@ -55,9 +54,9 @@ export default DefaultScreenPosts = ({ navigation }) => {
                   }
                   style={styles.commentsWrapper}
                 >
-                  <Feather name="message-circle" size={24} color={item.comments.length > 0 ? '#FF6C00' : "#BDBDBD"}  />
-                  <Text style={{ ...styles.commentsCount, color:  item.comments.length > 0 ? '#FF6C00' : "#BDBDBD"}}>
-                    {item.comments.length}
+                  <Feather name="message-circle" size={24} color={item?.comments?.length > 0 ? '#FF6C00' : "#BDBDBD"}  />
+                  <Text style={{ ...styles.commentsCount, color:  item?.comments?.length > 0 ? '#FF6C00' : "#BDBDBD"}}>
+                    {item?.comments?.length || 0}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity

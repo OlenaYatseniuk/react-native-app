@@ -34,7 +34,7 @@ export default function CommentsScreen({ route }) {
     try {
       const id = Date.now().toString();
       const postRef = doc(db, "posts", postId);
-      console.log("postRef", postRef);
+      
       await updateDoc(postRef, {
         comments: arrayUnion({
           login,
@@ -43,7 +43,6 @@ export default function CommentsScreen({ route }) {
           id,
         }),
       });
-
       keyboardHide();
       setComment("");
     } catch (error) {

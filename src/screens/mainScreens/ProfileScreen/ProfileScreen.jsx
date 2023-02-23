@@ -110,10 +110,10 @@ export default ProfileScreen = ({ navigation }) => {
                       <Feather
                         name="message-circle"
                         size={24}
-                        color="#BDBDBD"
+                        color={item?.comments?.length > 0 ? '#FF6C00' : "#BDBDBD"}
                       />
-                      <Text style={styles.commentsCount}>
-                        {item.comments.length}
+                      <Text style={{ ...styles.commentsCount, color:  item?.comments?.length > 0 ? '#FF6C00' : "#BDBDBD"}}>
+                        {item?.comments?.length || 0}
                       </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
