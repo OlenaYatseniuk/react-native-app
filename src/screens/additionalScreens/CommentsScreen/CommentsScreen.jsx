@@ -11,11 +11,13 @@ import {
   FlatList,
   Image,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 
 import { doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../../firebase/config";
+
 import { setCommentDate } from "../../../helpers/setCommentDate";
+
+import { AntDesign } from "@expo/vector-icons";
 
 export default function CommentsScreen({ route }) {
   const { postId, photo } = route.params;

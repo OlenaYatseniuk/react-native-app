@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Provider } from "react-redux";
-import { store } from "./src/redux/store";
+
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+
+import { store } from "./src/redux/store";
 
 import Main from "./src/components/Main/Main";
 

@@ -1,5 +1,5 @@
 import { auth } from "../../firebase/config";
-import db from "../../firebase/config";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -13,7 +13,7 @@ const { updateUserProfile, authStateChange, authLogOut } = authSlice.actions;
 
 export const registerNewUser =
   ({ login, email, password }) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     try {
       await createUserWithEmailAndPassword(
         auth,
@@ -40,7 +40,7 @@ export const registerNewUser =
 
 export const loginUser =
   ({ email, password }) =>
-  async (dispatch, getState) => {
+  async () => {
     try {
       await signInWithEmailAndPassword(
         auth,
@@ -52,7 +52,7 @@ export const loginUser =
     }
   };
 
-export const authStateChangeUser = () => async (dispatch, getState) => {
+export const authStateChangeUser = () => async (dispatch) => {
   await onAuthStateChanged(auth, (user) => {
     if (user) {
       dispatch(authStateChange({ stateChange: true }));
@@ -67,7 +67,7 @@ export const authStateChangeUser = () => async (dispatch, getState) => {
   });
 };
 
-export const logOutUser = () => async (dispatch, getState) => {
+export const logOutUser = () => async (dispatch) => {
   await signOut(auth);
   dispatch(authLogOut());
 };

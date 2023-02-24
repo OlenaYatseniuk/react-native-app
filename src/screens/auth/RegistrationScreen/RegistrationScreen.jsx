@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -10,10 +11,11 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
+
 import Input from "../../../components/Input/Input";
-import { AntDesign } from "@expo/vector-icons";
-import { useDispatch, useSelector } from "react-redux";
 import { registerNewUser } from "../../../redux/auth/authOperations";
+
+import { AntDesign } from "@expo/vector-icons";
 
 const initialState = {
   login: "",

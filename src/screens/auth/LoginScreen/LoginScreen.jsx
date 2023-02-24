@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
   View,
@@ -10,7 +11,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
 } from "react-native";
-import { useDispatch } from "react-redux";
+
 import { loginUser } from "../../../redux/auth/authOperations";
 import Input from "../../../components/Input/Input";
 

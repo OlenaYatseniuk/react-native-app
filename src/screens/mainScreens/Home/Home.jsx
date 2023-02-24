@@ -1,11 +1,12 @@
 import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
 
 import PostsScreen from "../PostsScreen/PostsScreen";
 import CreatePostsScreen from "../CreatePostsScreen/CreatePostsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
-import { useNavigation } from "@react-navigation/native";
+
+import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
 
 const MainTab = createBottomTabNavigator();
 

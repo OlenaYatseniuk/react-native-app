@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -9,19 +10,20 @@ import {
   TextInput,
   Keyboard,
 } from "react-native";
+
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import * as MediaLibrary from "expo-media-library";
+
+import { db } from "../../../firebase/config";
+import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
+
 import {
   FontAwesome,
   SimpleLineIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-
-import { db } from "../../../firebase/config";
-import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
-import { collection, addDoc } from "firebase/firestore";
-import { useSelector } from "react-redux";
 
 const initialState = {
   title: "",
@@ -299,7 +301,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
-    // alignSelf:'center,'
   },
   photoTitleContainer: {
     marginTop: 8,

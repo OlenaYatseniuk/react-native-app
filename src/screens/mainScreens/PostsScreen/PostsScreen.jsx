@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -5,9 +6,9 @@ import DefaultScreenPosts from "../../additionalScreens/DefaultScreenPosts/Defau
 import CommentsScreen from "../../additionalScreens/CommentsScreen/CommentsScreen";
 import MapScreen from "../../additionalScreens/MapScreen/MapScreen";
 
-import { MaterialIcons } from "@expo/vector-icons";
-import { useDispatch } from "react-redux";
 import { logOutUser } from "../../../redux/auth/authOperations";
+
+import { MaterialIcons } from "@expo/vector-icons";
 
 const InnerScreens = createStackNavigator();
 

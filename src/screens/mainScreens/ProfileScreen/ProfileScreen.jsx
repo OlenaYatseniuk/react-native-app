@@ -156,7 +156,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    // position:'relative'
   },
   avatarContainer: {
     alignSelf: "center",
