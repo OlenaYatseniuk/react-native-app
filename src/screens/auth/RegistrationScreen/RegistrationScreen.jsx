@@ -27,7 +27,7 @@ export default function RegistrationScreen({ navigation }) {
   const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const dispatch = useDispatch();
-  const isLogined = useSelector(state => state.auth.stateChange)
+  const isLogined = useSelector((state) => state.auth.stateChange);
 
   const handleInputChange = (value, name) => {
     setState((prevState) => ({ ...prevState, [name]: value }));
@@ -100,7 +100,9 @@ export default function RegistrationScreen({ navigation }) {
                   <Input
                     value={state.password}
                     placeholder={"Password"}
-                    onChangeText={(value) => handleInputChange(value, "password")}
+                    onChangeText={(value) =>
+                      handleInputChange(value, "password")
+                    }
                     onFocus={handleFocus}
                     password
                   />
